@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -37,19 +38,19 @@ public class SignupRequest {
     @Size(min = 6, max = 40)
     private String password;
 
-    @NotBlank
+    @NotNull
     @Schema(description = "Признак того, что учетная запись не просрочена")
     private Boolean accountNonExpired;
 
-    @NotBlank
+    @NotNull
     @Schema(description = "Признак того, что учетная запись не заблокирована")
     private Boolean accountNonLocked;
 
-    @NotBlank
+    @NotNull
     @Schema(description = "Признак того, что учетные данные не просрочены")
     private Boolean credentialsNonExpired;
 
-    @NotBlank
+    @NotNull
     @Schema(description = "Признак того, что учетная запись включена")
     private Boolean enabled;
 }

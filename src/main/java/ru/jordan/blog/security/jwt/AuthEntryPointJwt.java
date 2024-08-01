@@ -10,10 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+import ru.jordan.blog.model.Error.AuthError;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
@@ -23,19 +24,24 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
             throws IOException, ServletException {
-        logger.error("Unauthorized error: {}", authException.getMessage());
-
+        UUID errorId = UUID.randomUUID();
+        logger.error("Unauthorized error {} processing request {}", errorId, authException.getMessage());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
-        final Map<String, Object> body = new HashMap<>();
-        body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
-        body.put("error", "Unauthorized");
-        body.put("message", authException.getMessage());
-        body.put("path", request.getServletPath());
-
+        AuthError error = createError(request, authException, errorId, HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
         final ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(response.getOutputStream(), body);
+        mapper.writeValue(response.getOutputStream(), error);
     }
 
+    private AuthError createError(HttpServletRequest request, Exception ex, UUID errorId, int status, String error) {
+        AuthError authError = new AuthError();
+        authError.setId(errorId);
+        authError.setStatus(status);
+        authError.setError(error);
+        authError.setMessage(ex.getMessage());
+        authError.setPath(request.getServletPath());
+        authError.setDatetime(OffsetDateTime.now());
+        return authError;
+    }
 }

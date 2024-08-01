@@ -12,6 +12,7 @@ import ru.jordan.blog.repository.UserRepository;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    @Autowired
     private UserRepository userRepository;
 
     @Override

@@ -48,3 +48,21 @@ CREATE TABLE USER_ROLE
 COMMENT ON TABLE USER_ROLE IS 'Таблица связи пользователей и ролей';
 COMMENT ON COLUMN USER_ROLE.user_id IS 'Внешний ключ на таблицу User';
 COMMENT ON COLUMN USER_ROLE.role_id IS 'Внешний ключ на таблицу Role';
+
+CREATE TABLE post (
+                      id BIGSERIAL PRIMARY KEY,
+                      uuid UUID UNIQUE NOT NULL,
+                      title VARCHAR(255) UNIQUE NOT NULL,
+                      content TEXT NOT NULL,
+                      author VARCHAR(255),
+                      created_at TIMESTAMP,
+                      updated_at TIMESTAMP
+);
+
+COMMENT ON COLUMN post.id IS 'Уникальный идентификатор поста';
+COMMENT ON COLUMN post.uuid IS 'UUID поста';
+COMMENT ON COLUMN post.title IS 'Заголовок поста';
+COMMENT ON COLUMN post.content IS 'Содержимое поста';
+COMMENT ON COLUMN post.author IS 'Автор поста';
+COMMENT ON COLUMN post.created_at IS 'Дата и время создания поста';
+COMMENT ON COLUMN post.updated_at IS 'Дата и время последнего обновления поста';

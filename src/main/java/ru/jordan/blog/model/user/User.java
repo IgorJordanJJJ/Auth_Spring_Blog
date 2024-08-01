@@ -29,11 +29,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description = "Имя пользователя", example = "1")
     private Long id;
-    @Schema(description = "Имя пользователя")
+    @Schema(description = "Логин пользователя")
     @NotBlank
     @Size(max = 20)
     private String userName;
+    @Schema(description = "Имя пользователя")
     private String firstName;
+    @Schema(description = "Фамилия пользователя")
     private String lastName;
     @NotBlank
     @Size(max = 120)

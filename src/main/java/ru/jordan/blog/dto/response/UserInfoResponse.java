@@ -16,7 +16,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class UserInfoResponse {
     private String token;
-    private String type = "Bearer";
+    private String type;
     private Long id;
     private String userName;
     private String email;

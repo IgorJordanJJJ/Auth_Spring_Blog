@@ -1,4 +1,4 @@
-package ru.jordan.blog.controller;
+package ru.jordan.blog.controller.auth;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
